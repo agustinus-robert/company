@@ -10,4 +10,5 @@ model Warehouse {
     productLocation ProductLocation[]
     stockTransaction StockTransaction[]
     stockOpname StockOpname[]
+    @@map("warehouses")
 }

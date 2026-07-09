@@ -36,4 +36,5 @@ model StockOpnameLocation {
     updated_at DateTime @updatedAt
 
     stockOpname StockOpname @relation(fields: [stock_opname_id], references: [id])
+    @@map("stock_opname_locations")
 }

@@ -1,0 +1,24 @@
+[
+  {
+    "user_id": 1,
+    "otp_hash": "$2b$10$abcdefghijklmnopqrstuv",
+    "channel": "email",
+    "sent_to": "admin@example.com",
+    "expires_at": "2026-07-10T10:00:00.000Z",
+    "verified_at": null,
+    "used_at": null,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0"
+  },
+  {
+    "user_id": 2,
+    "otp_hash": "$2b$10$zyxwvutsrqponmlkjihgf",
+    "channel": "email",
+    "sent_to": "john@example.com",
+    "expires_at": "2026-07-10T11:00:00.000Z",
+    "verified_at": "2026-07-10T10:30:00.000Z",
+    "used_at": "2026-07-10T10:31:00.000Z",
+    "ip_address": "192.168.1.10",
+    "user_agent": "Chrome"
+  }
+]

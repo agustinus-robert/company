@@ -39,4 +39,6 @@ model ProductLocation {
     warehouse Warehouse @relation(fields: [warehouse_id], references: [id], onDelete: Cascade)
     location Location @relation(fields: [location_id], references: [id], onDelete: Cascade)
     rack Rack @relation(fields: [rack_id], references: [id], onDelete: Cascade)
+
+    @@map("product_locations")
 }

@@ -8,4 +8,5 @@ model Unit {
 
     product Product[]
     stockTransactionProduct StockTransactionProduct[]
+    @@map("units")
 }

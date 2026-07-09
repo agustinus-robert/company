@@ -1,0 +1,22 @@
+[
+  {
+    "code": "SUPER_ADMIN",
+    "name": "Super Administrator",
+    "description": "Full access to all modules"
+  },
+  {
+    "code": "ADMIN",
+    "name": "Administrator",
+    "description": "Manage application data"
+  },
+  {
+    "code": "STAFF",
+    "name": "Staff",
+    "description": "Operational staff user"
+  },
+  {
+    "code": "VIEWER",
+    "name": "Viewer",
+    "description": "Read only access"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "employee_id": 1,
+    "role_id": 1,
+    "name": "Administrator",
+    "username": "admin",
+    "email": "admin@example.com",
+    "cellphone": "081234567890",
+    "password": "$2b$10$8X7Y5q3vF9QwJrGkH5LQ6e0J6n5M8sW9vT1xY2zA3bC4dE5fG6hI",
+    "status": "active"
+  },
+  {
+    "employee_id": 2,
+    "role_id": 2,
+    "name": "John Doe",
+    "username": "johndoe",
+    "email": "john@example.com",
+    "cellphone": "081234567891",
+    "password": "$2b$10$8X7Y5q3vF9QwJrGkH5LQ6e0J6n5M8sW9vT1xY2zA3bC4dE5fG6hI",
+    "status": "active"
+  },
+  {
+    "employee_id": null,
+    "role_id": 2,
+    "name": "Guest User",
+    "username": "guest",
+    "email": "guest@example.com",
+    "cellphone": null,
+    "password": "$2b$10$8X7Y5q3vF9QwJrGkH5LQ6e0J6n5M8sW9vT1xY2zA3bC4dE5fG6hI",
+    "status": "inactive"
+  }
+]

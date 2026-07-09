@@ -6,4 +6,5 @@ model Category {
     updated_at DateTime @updatedAt
 
     products Product[]
+    @@map("categories")
 }

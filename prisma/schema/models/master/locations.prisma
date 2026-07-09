@@ -12,4 +12,5 @@ model Location{
     
     rack Rack[]
     location ProductLocation[]
+    @@map("warehouse_locations")
 }
