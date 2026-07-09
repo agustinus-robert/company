@@ -1,0 +1,13 @@
+model Rack {
+    id Int @id @default(autoincrement())
+    code String
+    count_rack Int
+    
+    location_id Int
+    
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    
+    location Location @relation(fields: [location_id], references: [id], onDelete: Cascade)
+    productLocation ProductLocation[]
+}

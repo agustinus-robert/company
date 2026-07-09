@@ -1,0 +1,61 @@
+model Role {
+    id Int @id @default(autoincrement())
+
+    code String @unique
+    name String
+    description String?
+
+    created_at DateTime  @default(now())
+    updated_at DateTime  @updatedAt
+
+    users User[]
+    role_permissions RolePermission[]
+
+    @@map("roles")
+}
+
+model Module {
+    id Int @id @default(autoincrement())
+
+    code String @unique
+    name String
+    description String?
+
+    sort_order Int @default(0)
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    role_permissions RolePermission[]
+
+    @@map("modules")
+}
+
+model RolePermission {
+    id Int @id @default(autoincrement())
+
+    role_id Int
+    module_id Int
+
+    can_access Boolean @default(false)
+    can_create Boolean @default(false)
+
+    read_scope PermissionScope @default(no)
+    update_scope PermissionScope @default(no)
+    delete_scope PermissionScope @default(no)
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    role Role @relation(fields: [role_id], references: [id])
+    module Module @relation(fields: [module_id], references: [id])
+
+    @@unique([role_id, module_id])
+    @@map("role_permissions")
+}
+
+enum PermissionScope {
+  no
+  all
+  own
+}

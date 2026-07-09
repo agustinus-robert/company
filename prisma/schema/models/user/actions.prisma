@@ -1,0 +1,87 @@
+model LoginOtp {
+    id Int @id @default(autoincrement())
+
+    user_id Int
+
+    otp_hash String
+    channel OtpChannel @default(email)
+    sent_to String
+
+    expires_at DateTime
+    verified_at DateTime?
+    used_at DateTime?
+
+    ip_address String?
+    user_agent String?
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    user User @relation(fields: [user_id], references: [id])
+
+    @@map("login_otps")
+}
+
+enum OtpChannel {
+  email
+}
+
+model UserSession {
+    id Int @id @default(autoincrement())
+
+    user_id Int
+    session_token String @unique
+    remember_me Boolean @default(false)
+
+    ip_address String?
+    user_agent String?
+
+    last_activity_at DateTime
+    expires_at DateTime
+    logged_out_at DateTime?
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    user User @relation(fields: [user_id], references: [id])
+
+    @@map("user_sessions")
+}
+
+model ActivityLog {
+    id Int @id @default(autoincrement())
+
+    user_id Int?
+    module_code String
+    action ActivityAction
+
+    description String?
+
+    subject_type String?
+    subject_id Int?
+
+    ip_address String?
+    user_agent String?
+
+    old_values Json?
+    new_values Json?
+
+    url String?
+    method String?
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    user User? @relation(fields: [user_id], references: [id])
+
+    @@map("activity_logs")
+}
+
+enum ActivityAction {
+  login
+  logout
+  create
+  read
+  update
+  delete
+}

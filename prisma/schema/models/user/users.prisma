@@ -1,0 +1,40 @@
+model User {
+    id Int @id @default(autoincrement())
+    employee_id Int?
+    role_id Int
+
+    name String
+    username String @unique
+    email String? @unique
+    cellphone String? @unique
+    password String
+
+    status UserStatus @default(active)
+
+    password_changed_at DateTime?
+    last_login_at DateTime?
+    last_logout_at DateTime?
+    remember_token String?
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    deleted_at DateTime?
+
+    employee Employee? @relation(fields: [employee_id], references: [id])
+    role Role @relation(fields: [role_id], references: [id])
+    
+    attendance_imports AttendanceImport[]
+    transport_allowance_settings TransportAllowanceSetting[]
+    transport_allowance_periods TransportAllowancePeriod[]
+  
+    login_otps LoginOtp[]
+    sessions UserSession[]
+    activity_logs ActivityLog[]
+
+    @@map("users")
+}
+
+enum UserStatus {
+  active
+  inactive
+}

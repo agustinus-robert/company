@@ -1,0 +1,118 @@
+model Attendance {
+    id Int @id @default(autoincrement())
+    employee_id Int
+    attendance_import_id Int?
+
+    attendance_date DateTime  @db.Date
+    checkin_at DateTime?
+    checkout_at DateTime?
+
+    checkin_location String?
+    checkout_location String?
+    attendance_type AttendanceType
+    duration_hours Decimal?  @db.Decimal(5,2)
+
+    status AttendanceStatus
+    verification_status VerificationStatus
+    verified_by_role String?
+    remarks String?
+
+    employee Employee  @relation(fields: [employee_id], references: [id])
+    attendance_import AttendanceImport? @relation(fields: [attendance_import_id], references: [id])
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    @@unique([employee_id, attendance_date])
+    @@map("attendances")
+}
+
+model AttendanceImport {
+    id Int @id @default(autoincrement())
+    user_id Int
+
+    original_filename String
+
+    period_year Int
+    period_month Int
+
+    status AttendanceImportStatus
+
+    total_rows Int @default(0)
+    processed_rows Int @default(0)
+
+    error_message String?
+
+    started_at DateTime?
+    finished_at DateTime?
+
+    user User @relation(fields: [user_id], references: [id])
+
+    attendances Attendance[]
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    @@map("attendance_imports")
+}
+
+model AttendanceSummary {
+    id Int @id @default(autoincrement())
+    employee_id Int
+
+    period_year Int
+    period_month Int
+
+    hadir Int @default(0)
+
+    cuti Int @default(0)
+    kuota_cuti Int @default(0)
+
+    izin Int @default(0)
+    kuota_izin Int @default(0)
+
+    unpaid_leave Int @default(0)
+    kuota_unpaid_leave Int @default(0)
+
+    status_hadir AttendanceSummaryStatus
+
+    calculated_at DateTime?
+
+    employee Employee @relation(fields: [employee_id], references: [id])
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    @@unique([employee_id, period_year, period_month])
+    @@map("attendance_summaries")
+}
+
+enum AttendanceSummaryStatus {
+  terpenuhi
+  tidak_terpenuhi
+}
+
+enum AttendanceImportStatus {
+  queued
+  processing
+  completed
+  failed
+}
+
+enum AttendanceType {
+  hadir
+  cuti
+  izin
+  unpaid_leave
+}
+
+enum AttendanceStatus {
+  terpenuhi
+  tidak_terpenuhi
+}
+
+enum VerificationStatus {
+  pending
+  verified
+  rejected
+}

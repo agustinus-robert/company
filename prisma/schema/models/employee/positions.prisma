@@ -1,0 +1,21 @@
+model Position {
+    id Int @id @default(autoincrement())
+
+    code String @unique
+    name String
+
+    position_type PositionType
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    employees Employee[]
+
+    @@map("positions")
+}
+
+enum PositionType {
+  manager
+  staf
+  magang
+}

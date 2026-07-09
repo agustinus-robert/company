@@ -1,0 +1,92 @@
+model Employee {
+    id Int @id @default(autoincrement())
+
+    nip String @unique
+    name String
+    email String @unique
+    phone String?
+
+    photo_path String?
+
+    birth_place String?
+    birth_date DateTime?
+
+    marital_status MaritalStatus?
+    children_count Int @default(0)
+
+    joined_at DateTime?
+
+    position_id Int
+    department_id Int
+    district_id Int
+
+    employment_type EmploymentType
+    gender Gender?
+
+    distance_km Decimal? @db.Decimal(10,2)
+
+    full_address String?
+    
+    educations EmployeeEducation[]
+    attendances Attendance[]
+    attendance_summaries AttendanceSummary[]
+    transport_allowance_details TransportAllowanceDetail[]
+
+    status EmployeeStatus  @default(active)
+
+    created_by Int?
+    updated_by Int?
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    deleted_at DateTime?
+
+    position Position @relation(fields: [position_id], references: [id])
+    department Department @relation(fields: [department_id], references: [id])
+    district District @relation(fields: [district_id], references: [id])
+    users User[]
+    stockOpname StockOpname[]
+
+    @@map("employees")
+}
+
+model EmployeeEducation {
+    id Int @id @default(autoincrement())
+
+    employee_id Int
+
+    education_level String
+    school_name String
+    graduation_year Int?
+    sort_order Int @default(0)
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    employee Employee @relation(fields: [employee_id], references: [id], onDelete: Cascade)
+
+    @@map("employee_educations")
+}
+
+enum EmploymentType {
+  pkwtt
+  pkwt
+  magang
+}
+
+enum MaritalStatus {
+  single
+  married
+  divorced
+  widowed
+}
+
+enum Gender {
+  male
+  female
+}
+
+enum EmployeeStatus {
+  active
+  inactive
+}

@@ -1,0 +1,13 @@
+model Province {
+    id Int @id @default(autoincrement())
+
+    code String @unique
+    name String
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    regencies Regency[]
+
+    @@map("provinces")
+}

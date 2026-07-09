@@ -1,0 +1,11 @@
+model Unit {
+    id Int @id @default(autoincrement())
+    code String
+    name String
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    product Product[]
+    stockTransactionProduct StockTransactionProduct[]
+}

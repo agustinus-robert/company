@@ -1,0 +1,16 @@
+model Regency {
+    id Int @id @default(autoincrement())
+
+    province_id Int
+
+    code String @unique
+    name String
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    province Province @relation(fields: [province_id], references: [id])
+    districts District[]
+
+    @@map("regencies")
+}

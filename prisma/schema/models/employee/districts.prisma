@@ -1,0 +1,16 @@
+model District {
+    id Int @id @default(autoincrement())
+
+    regency_id Int
+
+    code String @unique
+    name String
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    regency Regency  @relation(fields: [regency_id], references: [id])
+    employees Employee[]
+
+    @@map("districts")
+}

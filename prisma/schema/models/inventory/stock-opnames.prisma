@@ -1,0 +1,39 @@
+model StockOpname {
+    id Int @id @default(autoincrement())
+
+    date DateTime
+    title String @db.LongText
+    warehouse_id Int
+    qty Int
+    checked_goods Int
+    precentage Decimal @db.Decimal(5, 2)
+
+    note String @db.LongText
+    fileName String
+    filePath String
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    employee_id Int
+
+    warehouse Warehouse @relation(fields: [warehouse_id], references: [id])
+    employee Employee @relation(fields: [employee_id], references: [id])
+
+    stockOpnameLocation StockOpnameLocation[]
+    @@map("stock_opnames")
+}
+
+model StockOpnameLocation {
+    id Int @id @default(autoincrement())
+    stock_opname_id Int
+    product_id Int
+
+    product Product @relation(fields: [product_id], references: [id])
+    qty Int
+    note String @db.LongText
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    stockOpname StockOpname @relation(fields: [stock_opname_id], references: [id])
+}
