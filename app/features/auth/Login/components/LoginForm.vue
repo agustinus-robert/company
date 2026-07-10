@@ -74,7 +74,7 @@ const login = async () => {
 
     if(loginResponse.success == true){
       const token = useCookie("token", {
-        maxAge: form.remember ? 60 * 60 * 24 * 30 : 60 * 60 * 24,
+        maxAge: 60 * 60 * 24 * 30,
         httpOnly: false,
       });
 
