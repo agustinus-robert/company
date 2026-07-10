@@ -46,50 +46,82 @@
               <th>Status</th>
             </tr>
           </thead>
-          <tbody v-for="(item, index) in manajemenUser" :key="item.id">
-            <tr>
-              <td class="text-center">{{ index + 1 }}</td>
+          <tbody>
+            <tr v-for="(item, index) in filteredUsers">
+              <td class="text-center">
+                {{ index + 1 }}
+              </td>
+
               <td class="text-nowrap">
                 <div class="d-flex">
-                  <!-- Aksi Edit -->
+                  <!-- Edit -->
                   <a
                     href="#"
                     class="text-dark"
                     data-bs-toggle="modal"
                     data-bs-target="#modal-add"
+                    @click="editUser(item)"
                   >
                     <span
                       data-bs-toggle="tooltip"
                       data-bs-placement="bottom"
                       title="Edit"
                     >
-                      <IconPencil stroke="{1}" size="20" />
+                      <IconPencil stroke="1" size="20" />
                     </span>
                   </a>
 
-                  <!-- Aksi Hapus -->
+                  <!-- Hapus -->
                   <a
                     href="#"
                     class="text-danger"
                     data-bs-toggle="modal"
                     data-bs-target="#modal-hapus"
+                    @click="prepareDelete(item)"
                   >
                     <span
                       data-bs-toggle="tooltip"
                       data-bs-placement="bottom"
                       title="Hapus"
                     >
-                      <IconTrash stroke="{1}" size="20" />
+                      <IconTrash stroke="1" size="20" />
                     </span>
                   </a>
                 </div>
               </td>
-              <td>{{ item.nama }}</td>
-              <td>{{ item.username }}</td>
-              <td>{{ item.jabatan }}</td>
-              <td>{{ item.departemen }}</td>
-              <td>{{ item.role }}</td>
-              <td>{{ item.isActive ? "Aktif" : "Tidak Aktif" }}</td>
+
+              <td>
+                {{ item.name }}
+              </td>
+
+              <td>
+                {{ item.username }}
+              </td>
+
+              <td>
+                {{ item.employee?.position?.name ?? "-" }}
+              </td>
+
+              <td>
+                {{ item.employee?.department?.name ?? "-" }}
+              </td>
+
+              <td>
+                {{ item.role?.name ?? "-" }}
+              </td>
+
+              <td>
+                <span
+                  class="badge"
+                  :class="item.status === 'active' ? 'bg-green' : 'bg-red'"
+                >
+                  {{ item.status === "active" ? "Aktif" : "Tidak Aktif" }}
+                </span>
+              </td>
+            </tr>
+
+            <tr v-if="users.length === 0">
+              <td colspan="8" class="text-center">Data tidak ditemukan</td>
             </tr>
           </tbody>
         </table>
@@ -127,94 +159,112 @@
         </ul>
       </div>
 
-      <!-- Modal Tambah/Edit User -->
       <div class="modal modal-blur fade" id="modal-add">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Form Manajemen User</h5>
+
               <button
                 type="button"
                 class="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
               ></button>
             </div>
+
             <div class="modal-body">
-              <!-- NAMA -->
               <div class="mb-3">
-                <label class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" />
+                <label class="form-label"> Nama Lengkap </label>
+
+                <input v-model="form.name" type="text" class="form-control" />
               </div>
 
-              <!-- USERNAME -->
               <div class="mb-3">
-                <label class="form-label">Username</label>
-                <input type="text" class="form-control" />
+                <label class="form-label"> Username </label>
+
+                <input
+                  v-model="form.username"
+                  type="text"
+                  class="form-control"
+                />
               </div>
 
-              <!-- JABATAN -->
               <div class="mb-3">
-                <label class="form-label">Jabatan</label>
-                <select name="" id="" class="form-select">
-                  <option value="" selected disabled>
-                    Pilih terlebih dahulu
+                <label class="form-label"> Email </label>
+
+                <input v-model="form.email" type="email" class="form-control" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label"> Nomor HP </label>
+
+                <input
+                  v-model="form.cellphone"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label"> Role </label>
+
+                <select v-model="form.role_id" class="form-select">
+                  <option value="" disabled>Pilih Role</option>
+
+                  <option
+                    v-for="item in roleOptions.slice(1)"
+                    :key="item.value"
+                    :value="item.value"
+                  >
+                    {{ item.label }}
                   </option>
-                  <option value="">Programmer</option>
-                  <option value="">System Analist</option>
-                  <option value="">Akuntan</option>
-                  <option value="">Manager Produksi</option>
                 </select>
               </div>
 
-              <!-- DEPARTEMEN -->
               <div class="mb-3">
-                <label class="form-label">Departemen</label>
-                <select name="" id="" class="form-select">
-                  <option value="" selected disabled>
-                    Pilih terlebih dahulu
-                  </option>
-                  <option value="">Produksi</option>
-                  <option value="">Finance</option>
-                  <option value="">Direksi</option>
-                </select>
+                <label class="form-label"> Password </label>
+
+                <input
+                  v-model="form.password"
+                  type="password"
+                  class="form-control mb-1"
+                />
+
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  @click="generatePassword"
+                >
+                  Generate Password
+                </button>
               </div>
 
-              <!-- ROLE -->
-              <div class="mb-3">
-                <label class="form-label">Role</label>
-                <select name="" id="" class="form-select">
-                  <option value="" selected disabled>
-                    Pilih terlebih dahulu
-                  </option>
-                  <option value="">Admin</option>
-                  <option value="">Member</option>
-                </select>
-              </div>
-
-              <!-- PASSWORD -->
-              <div class="mb-3">
-                <label class="form-label">Password</label>
-                <input type="password" class="form-control mb-1" />
-                <button class="btn btn-primary">Generate Password</button>
-              </div>
-
-              <!-- STATUS -->
               <div>
-                <label class="form-label">Status</label>
+                <label class="form-label"> Status </label>
+
                 <label class="form-check">
-                  <input class="form-check-input" type="checkbox" />
-                  <span class="form-check-label">Aktif</span>
+                  <input
+                    v-model="form.status"
+                    class="form-check-input"
+                    type="checkbox"
+                    true-value="active"
+                    false-value="inactive"
+                  />
+
+                  <span class="form-check-label"> Aktif </span>
                 </label>
               </div>
             </div>
+
             <div class="modal-footer">
               <div class="d-flex gap-2 ms-auto">
                 <button type="button" class="btn" data-bs-dismiss="modal">
                   Kembali
                 </button>
-                <button type="button" class="btn btn-primary">
-                  <i class="ti ti-check me-1"></i> Simpan
+
+                <button type="button" class="btn btn-primary" @click="saveUser">
+                  <i class="ti ti-check me-1"></i>
+                  Simpan
                 </button>
               </div>
             </div>
@@ -274,6 +324,7 @@
                       href="#"
                       class="btn btn-danger btn-4 w-100"
                       data-bs-dismiss="modal"
+                      @click="deleteUser"
                     >
                       Hapus
                     </a>
@@ -289,6 +340,9 @@
 </template>
 
 <script setup>
+import { IconPencil, IconPlus, IconSearch, IconTrash } from "@tabler/icons-vue";
+import { toast } from "vue-sonner";
+
 definePageMeta({
   title: "Manajemen User",
   layout: false,
@@ -298,21 +352,176 @@ useSeoMeta({
   title: "Manajemen User",
 });
 
-import { IconPencil, IconPlus, IconSearch, IconTrash } from "@tabler/icons-vue";
-import { manajemenUser } from "~/data/manajemen-user.js";
+const users = ref([]);
 
-const roleOptions = [
+const roleOptions = ref([
   {
     label: "Semua Role",
     value: "",
   },
-  {
-    label: "Admin",
-    value: "admin",
-  },
-  {
-    label: "Super Admin",
-    value: "super admin",
-  },
-];
+]);
+
+const selectedRole = ref("");
+
+const search = ref("");
+
+const selectedUser = ref(null);
+
+const getUsers = async () => {
+  try {
+    const response = await $fetch("/api/user/manage");
+
+    users.value = response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getRoles = async () => {
+  try {
+    const response = await $fetch("/api/user/role");
+
+    roleOptions.value.push(
+      ...response.data.map((item) => ({
+        label: item.name,
+        value: item.id,
+      })),
+    );
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+await Promise.all([getUsers(), getRoles()]);
+
+const filteredUsers = computed(() => {
+  return users.value.filter((item) => {
+    const keyword = search.value.toLowerCase();
+
+    const matchSearch =
+      item.name?.toLowerCase().includes(keyword) ||
+      item.username?.toLowerCase().includes(keyword);
+
+    const matchRole = !selectedRole.value || item.role_id == selectedRole.value;
+
+    return matchSearch && matchRole;
+  });
+});
+
+const form = reactive({
+  id: null,
+  name: "",
+  username: "",
+  email: "",
+  cellphone: "",
+  role_id: "",
+  password: "",
+  status: "active",
+});
+
+const resetForm = () => {
+  form.id = null;
+  form.name = "";
+  form.username = "";
+  form.email = "";
+  form.cellphone = "";
+  form.role_id = "";
+  form.password = "";
+  form.status = "active";
+};
+
+const editUser = (item) => {
+  form.id = item.id;
+  form.name = item.name;
+  form.username = item.username;
+  form.email = item.email ?? "";
+  form.cellphone = item.cellphone ?? "";
+  form.role_id = item.role_id;
+  form.password = "";
+  form.status = item.status;
+};
+
+const generatePassword = () => {
+  form.password = Math.random().toString(36).slice(-10);
+};
+
+const saveUser = async () => {
+  try {
+    const url = form.id ? `/api/user/manage/${form.id}` : "/api/user/manage";
+
+    const method = form.id ? "PUT" : "POST";
+
+    const response = await $fetch(url, {
+      method,
+
+      body: {
+        name: form.name,
+
+        username: form.username,
+
+        email: form.email || null,
+
+        cellphone: form.cellphone || null,
+
+        role_id: Number(form.role_id),
+
+        password: form.password || null,
+
+        status: form.status,
+      },
+    });
+
+    if (response.success) {
+      await getUsers();
+
+      toast.success(
+        form.id ? "User berhasil diperbarui" : "User berhasil ditambahkan",
+      );
+
+      resetForm();
+    } else {
+      toast.error("Proses gagal");
+    }
+  } catch (error) {
+    toast.error(error?.data?.statusMessage || "Terjadi kesalahan");
+
+    console.error(error);
+  }
+};
+
+/**
+ * SET USER YANG AKAN DIHAPUS
+ */
+const prepareDelete = (item) => {
+  selectedUser.value = item;
+};
+
+/**
+ * DELETE USER
+ */
+const deleteUser = async () => {
+  if (!selectedUser.value) {
+    return;
+  }
+
+  try {
+    const response = await $fetch(`/api/user/manage/${selectedUser.value.id}`, {
+      method: "DELETE",
+    });
+
+    if (response.success) {
+      await getUsers();
+
+      toast.success("User berhasil dihapus");
+
+      selectedUser.value = null;
+    } else {
+      toast.error("Gagal menghapus user");
+    }
+  } catch (error) {
+    toast.error(error?.data?.statusMessage || "Terjadi kesalahan");
+
+    console.error(error);
+  }
+};
 </script>
