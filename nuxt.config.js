@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import path from 'node:path'
+import path from "node:path";
 export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
@@ -11,6 +11,9 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     jwtSecret: process.env.JWT_SECRET,
+    demoMode: process.env.DEMO_MODE === "true",
+    jwtExpiresIn: process.env.JWT_EXPIRES_IN || "30d",
+    sessionExpiresMinutes: Number(process.env.SESSION_EXPIRES_MINUTES || 30),
     public: {
       appName: process.env.APP_NAME,
       appClient: process.env.APP_CLIENT,

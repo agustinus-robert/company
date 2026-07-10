@@ -28,6 +28,7 @@
     "jsonwebtoken": "^9.0.3",
     "mariadb": "^3.5.3",
     "nuxt": "^4.0.0",
+    "pdfkit": "^0.19.1",
     "swiper": "^12.1.4",
     "vue": "latest",
     "vue-recaptcha": "^3.0.0-alpha.2",

@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { prisma } from "#root/server/db/prisma.js";
 
 export default defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
 
   const token = getCookie(event, "token");
 
@@ -9,75 +10,62 @@ export default defineEventHandler(async (event) => {
     return;
   }
 
-
   let payload;
 
   try {
-
-    payload = jwt.verify(
-      token,
-      useRuntimeConfig().jwtSecret
-    );
-
+    payload = jwt.verify(token, config.jwtSecret);
   } catch {
-
     deleteCookie(event, "token");
 
     throw createError({
       statusCode: 401,
-      message: "Session expired"
+      message: "Session expired",
     });
-
   }
 
+  if (config.demoMode) {
+    return;
+  }
 
   const session = await prisma.userSession.findUnique({
     where: {
-      session_token: payload.session_token
-    }
+      session_token: payload.session_token,
+    },
   });
 
-
   if (!session) {
-
     deleteCookie(event, "token");
 
     throw createError({
       statusCode: 401,
-      message: "Session tidak ditemukan"
+      message: "Session tidak ditemukan",
     });
-
   }
 
   if (session.expires_at < new Date()) {
-
     await prisma.userSession.delete({
       where: {
-        session_token: payload.session_token
-      }
+        session_token: payload.session_token,
+      },
     });
-
 
     deleteCookie(event, "token");
 
-
     throw createError({
       statusCode: 401,
-      message: "Session expired"
+      message: "Session expired",
     });
-
   }
 
   await prisma.userSession.update({
     where: {
-      session_token: payload.session_token
+      session_token: payload.session_token,
     },
     data: {
       last_activity_at: new Date(),
       expires_at: new Date(
-        Date.now() + 3 * 60 * 1000
-      )
-    }
+        Date.now() + config.sessionExpiresMinutes * 60 * 1000,
+      ),
+    },
   });
-
 });
