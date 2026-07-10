@@ -23,13 +23,16 @@
     "@tabler/core": "1.0.0-beta24",
     "@tabler/icons-vue": "^3.44.0",
     "apexcharts": "^3.54.0",
+    "bcrypt": "^6.0.0",
     "jquery": "^3.7.1",
+    "jsonwebtoken": "^9.0.3",
     "mariadb": "^3.5.3",
     "nuxt": "^4.0.0",
     "swiper": "^12.1.4",
     "vue": "latest",
     "vue-recaptcha": "^3.0.0-alpha.2",
     "vue-router": "latest",
+    "vue-sonner": "^2.0.9",
     "vue3-apexcharts": "1.6.0"
   },
   "devDependencies": {

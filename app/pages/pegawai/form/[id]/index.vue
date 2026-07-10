@@ -5,6 +5,7 @@
 <script setup>
 definePageMeta({
   title: "Edit Pegawai",
+  middleware: "auth"
 });
 
 useSeoMeta({

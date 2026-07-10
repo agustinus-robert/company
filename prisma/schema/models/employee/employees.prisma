@@ -16,6 +16,7 @@ model Employee {
 
     joined_at DateTime?
 
+    user_id Int
     position_id Int
     department_id Int
     district_id Int
@@ -41,10 +42,10 @@ model Employee {
     updated_at DateTime @updatedAt
     deleted_at DateTime?
 
+    user User @relation(fields: [user_id], references: [id])
     position Position @relation(fields: [position_id], references: [id])
     department Department @relation(fields: [department_id], references: [id])
     district District @relation(fields: [district_id], references: [id])
-    users User[]
     stockOpname StockOpname[]
 
     @@map("employees")

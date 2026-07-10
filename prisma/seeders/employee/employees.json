@@ -16,6 +16,7 @@
 
             "joined_at": "2020-01-15",
 
+            "user_id": 1,
             "position_id": 1,
             "department_id": 1,
             "district_id": 1,
@@ -60,6 +61,7 @@
 
             "joined_at": "2023-06-01",
 
+            "user_id": 2,
             "position_id": 2,
             "department_id": 1,
             "district_id": 3,
@@ -98,6 +100,7 @@
 
             "joined_at": "2025-01-10",
 
+            "user_id": 3,
             "position_id": 4,
             "department_id": 1,
             "district_id": 2,

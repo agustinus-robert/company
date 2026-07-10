@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import roles from "./roles.json" with { type: "json" };
 import users from "./users.json" with { type: "json" };
 import otps from "./otps.json" with { type: "json" };
@@ -6,15 +7,8 @@ async function seedRoles(prisma) {
   console.log("Seeding roles...");
 
   for (const role of roles) {
-    await prisma.role.upsert({
-      where: {
-        code: role.code,
-      },
-      update: {
-        name: role.name,
-        description: role.description,
-      },
-      create: {
+    await prisma.role.create({
+      data: {
         code: role.code,
         name: role.name,
         description: role.description,
@@ -25,40 +19,20 @@ async function seedRoles(prisma) {
   console.log("Roles seeded");
 }
 
-
 async function seedUsers(prisma) {
   console.log("Seeding users...");
 
   for (const user of users) {
-    const role = await prisma.role.findUnique({
-      where: {
-        id: user.role_id,
-      },
-    });
+    const hashedPassword = await bcrypt.hash(user.password, 10);
 
-    if (!role) {
-      throw new Error(`Role ${user.role_id} not found`);
-    }
-
-    await prisma.user.upsert({
-      where: {
-        username: user.username,
-      },
-      update: {
-        name: user.name,
-        email: user.email,
-        cellphone: user.cellphone,
-        password: user.password,
-        status: user.status,
-        role_id: role.id,
-      },
-      create: {
-        role_id: role.id,
+    await prisma.user.create({
+      data: {
+        role_id: user.role_id,
         name: user.name,
         username: user.username,
         email: user.email,
         cellphone: user.cellphone,
-        password: user.password,
+        password: hashedPassword,
         status: user.status,
       },
     });
@@ -66,7 +40,6 @@ async function seedUsers(prisma) {
 
   console.log("Users seeded");
 }
-
 
 async function seedOtps(prisma) {
   console.log("Seeding OTP...");
@@ -93,7 +66,6 @@ async function seedOtps(prisma) {
 
   console.log("OTP seeded");
 }
-
 
 export default async function userInit(prisma) {
   await seedRoles(prisma);

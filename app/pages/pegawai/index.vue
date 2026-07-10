@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
   title: "Data Pegawai",
+  middleware: "auth",
   layout: false,
 });
 

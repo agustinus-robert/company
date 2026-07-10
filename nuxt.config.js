@@ -1,9 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import path from 'node:path'
 export default defineNuxtConfig({
-  alias: {
-    "@prisma": path.resolve("./prisma/generated/client"),
-  },
   future: {
     compatibilityVersion: 4,
   },
@@ -13,6 +10,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET,
     public: {
       appName: process.env.APP_NAME,
       appClient: process.env.APP_CLIENT,

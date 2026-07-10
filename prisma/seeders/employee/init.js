@@ -115,6 +115,7 @@ async function seedEmployees(prisma) {
                     ? new Date(item.joined_at)
                     : null,
 
+                user_id: item.user_id,
                 position_id: item.position_id,
                 department_id: item.department_id,
                 district_id: item.district_id,

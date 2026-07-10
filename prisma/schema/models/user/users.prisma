@@ -19,8 +19,6 @@ model User {
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
     deleted_at DateTime?
-
-    employee Employee? @relation(fields: [employee_id], references: [id])
     role Role @relation(fields: [role_id], references: [id])
     
     attendance_imports AttendanceImport[]
@@ -30,6 +28,7 @@ model User {
     login_otps LoginOtp[]
     sessions UserSession[]
     activity_logs ActivityLog[]
+    employee Employee[]
 
     @@map("users")
 }

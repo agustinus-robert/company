@@ -44,6 +44,9 @@
 import "~/assets/css/login.css";
 const { theme, initTheme } = useTheme();
 
+useHead({
+  title: "Halaman Login"
+})
 import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/css";
