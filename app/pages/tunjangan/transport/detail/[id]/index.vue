@@ -4,7 +4,9 @@
 
     <div class="card">
       <div class="card-header">
-        <button class="btn btn-primary">Hitung Tunjangan</button>
+        <button class="btn btn-primary" @click="hitungTunjangan">
+          Hitung Tunjangan
+        </button>
 
         <div class="ms-auto">
           <div class="input-group">
@@ -133,7 +135,7 @@ const page = ref(1);
 const limit = ref(10);
 const search = ref("");
 
-const { data, pending } = await useFetch(
+const { data, pending, refresh } = await useFetch(
   `/api/hrms/transport-allowance/period/${route.params.id}`,
   {
     query: {
@@ -145,6 +147,17 @@ const { data, pending } = await useFetch(
   },
 );
 
+const hitungTunjangan = async () => {
+  await $fetch(
+    `/api/hrms/transport-allowance/period/${route.params.id}/calculate`,
+    {
+      method: "POST",
+    },
+  );
+
+  await refresh();
+};
+
 const period = computed(() => ({
   title: data.value?.period?.title ?? "",
   status: data.value?.period?.status ?? "",
@@ -152,7 +165,11 @@ const period = computed(() => ({
   totalAmount: data.value?.period?.totalAmount ?? 0,
 }));
 
-const detailTunjanganTransport = computed(() => data.value?.data ?? []);
+const detailTunjanganTransport = computed(() => {
+  return data.value?.data ?? [];
+});
 
-const pagination = computed(() => data.value?.pagination ?? {});
+const pagination = computed(() => {
+  return data.value?.pagination ?? {};
+});
 </script>
