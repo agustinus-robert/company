@@ -1,0 +1,48 @@
+{
+    "transactions": [
+        {
+            "transaction_type": "in",
+            "reference_no": "TRX-IN-001",
+            "source": "Supplier Laptop Indonesia",
+            "receiver": "Gudang Utama",
+            "contact_person": "Budi",
+            "phone": 812345678,
+            "note": "Barang masuk awal",
+            "warehouse_id": 1,
+            "grand_total": 92500000,
+            "products": [
+                {
+                    "product_id": 1,
+                    "unit_id": 1,
+                    "qty": 10,
+                    "total": 85000000
+                },
+                {
+                    "product_id": 2,
+                    "unit_id": 1,
+                    "qty": 30,
+                    "total": 7500000
+                }
+            ]
+        },
+        {
+            "transaction_type": "out",
+            "reference_no": "TRX-OUT-001",
+            "source": "Gudang Utama",
+            "receiver": "Customer ABC",
+            "contact_person": "Andi",
+            "phone": 812345679,
+            "note": "Pengiriman customer",
+            "warehouse_id": 1,
+            "grand_total": 250000,
+            "products": [
+                {
+                    "product_id": 2,
+                    "unit_id": 1,
+                    "qty": 1,
+                    "total": 250000
+                }
+            ]
+        }
+    ]
+}

@@ -1,73 +1,59 @@
 model TransportAllowanceSetting {
-  id              Int      @id @default(autoincrement())
-
-  base_fare       Decimal  @db.Decimal(12,2)
-
+  id Int @id @default(autoincrement())
+  base_fare Decimal  @db.Decimal(12,2)
   effective_start DateTime @db.Date
+  min_km Decimal @db.Decimal(8,2)
+  max_km Decimal @db.Decimal(8,2)
+  is_active Boolean @default(true)
+  created_by Int?
 
-  min_km          Decimal  @db.Decimal(8,2)
-  max_km          Decimal  @db.Decimal(8,2)
+  user User? @relation(fields: [created_by], references: [id])
 
-  is_active       Boolean  @default(true)
-
-  created_by      Int?
-
-  user            User?    @relation(fields: [created_by], references: [id])
-
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
-
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   @@map("transport_allowance_settings")
 }
 
 model TransportAllowancePeriod {
-  id              Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  period_year     Int
-  period_month    Int
-
-  total_recipients Int     @default(0)
-  total_amount     Decimal @db.Decimal(14,2)
-
-  status          TransportAllowancePeriodStatus
-  calculated_by   Int?
-
-  calculated_at   DateTime?
+  period_year Int
+  period_month Int
+  total_recipients Int @default(0)
+  total_amount Decimal @db.Decimal(14,2)
+  
+  status TransportAllowancePeriodStatus
+  calculated_by Int?
+  calculated_at DateTime?
   transport_allowance_details TransportAllowanceDetail[]
+  user User? @relation(fields: [calculated_by], references: [id])
 
-  user            User? @relation(fields: [calculated_by], references: [id])
-
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
-
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   @@unique([period_year, period_month])
   @@map("transport_allowance_periods")
 }
 
 model TransportAllowanceDetail {
-  id                          Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   transport_allowance_period_id Int
-  employee_id                  Int
+  employee_id Int
 
-  base_fare                   Decimal  @db.Decimal(12,2)
+  base_fare Decimal  @db.Decimal(12,2)
 
-  original_km                 Decimal  @db.Decimal(8,2)
-  rounded_km                  Decimal  @db.Decimal(8,2)
-
-  attendance_days             Int @default(0)
-
-  nominal                     Decimal  @db.Decimal(14,2)
-
-  eligibility_status          EligibilityStatus
-
-  calculation_note            String?
+  original_km Decimal  @db.Decimal(8,2)
+  rounded_km Decimal  @db.Decimal(8,2)
+  attendance_days Int @default(0)
+  nominal Decimal @db.Decimal(14,2)
+  eligibility_status EligibilityStatus
+  calculation_note String?
 
   transport_allowance_period TransportAllowancePeriod @relation(fields: [transport_allowance_period_id], references: [id])
   employee Employee @relation(fields: [employee_id], references: [id])
 
-  created_at                  DateTime @default(now())
-  updated_at                  DateTime @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@unique([transport_allowance_period_id, employee_id])
   @@map("transport_allowance_details")

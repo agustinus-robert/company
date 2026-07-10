@@ -1,0 +1,104 @@
+{
+    "imports": [
+        {
+            "user_id": 1,
+            "original_filename": "attendance-july-2026.xlsx",
+            "period_year": 2026,
+            "period_month": 7,
+            "status": "completed",
+            "total_rows": 3,
+            "processed_rows": 3,
+            "error_message": null,
+            "started_at": "2026-07-01 08:00:00",
+            "finished_at": "2026-07-01 08:10:00",
+
+            "attendances": [
+                {
+                    "employee_id": 1,
+                    "attendance_date": "2026-07-01",
+
+                    "checkin_at": "2026-07-01 08:00:00",
+                    "checkout_at": "2026-07-01 17:00:00",
+
+                    "checkin_location": "Office",
+                    "checkout_location": "Office",
+
+                    "attendance_type": "hadir",
+                    "duration_hours": 9,
+
+                    "status": "terpenuhi",
+
+                    "verification_status": "verified",
+                    "verified_by_role": "manager",
+
+                    "remarks": "Tepat waktu"
+                },
+                {
+                    "employee_id": 2,
+                    "attendance_date": "2026-07-01",
+
+                    "checkin_at": "2026-07-01 08:15:00",
+                    "checkout_at": "2026-07-01 17:00:00",
+
+                    "checkin_location": "Office",
+                    "checkout_location": "Office",
+
+                    "attendance_type": "hadir",
+                    "duration_hours": 8.75,
+
+                    "status": "terpenuhi",
+
+                    "verification_status": "pending",
+                    "verified_by_role": null,
+
+                    "remarks": null
+                }
+            ]
+        }
+    ],
+
+    "summaries": [
+        {
+            "employee_id": 1,
+
+            "period_year": 2026,
+            "period_month": 7,
+
+            "hadir": 22,
+
+            "cuti": 1,
+            "kuota_cuti": 12,
+
+            "izin": 0,
+            "kuota_izin": 5,
+
+            "unpaid_leave": 0,
+            "kuota_unpaid_leave": 3,
+
+            "status_hadir": "terpenuhi",
+
+            "calculated_at": "2026-07-31 23:00:00"
+        },
+        {
+            "employee_id": 2,
+
+            "period_year": 2026,
+            "period_month": 7,
+
+            "hadir": 20,
+
+            "cuti": 2,
+            "kuota_cuti": 12,
+
+            "izin": 1,
+            "kuota_izin": 5,
+
+            "unpaid_leave": 0,
+            "kuota_unpaid_leave": 3,
+
+            "status_hadir": "terpenuhi",
+
+            "calculated_at": "2026-07-31 23:00:00"
+        }
+    ]
+}

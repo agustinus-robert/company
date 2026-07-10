@@ -1,0 +1,22 @@
+[
+    {
+        "code": "PCS",
+        "name": "Pieces"
+    },
+    {
+        "code": "BOX",
+        "name": "Box"
+    },
+    {
+        "code": "DUS",
+        "name": "Dus"
+    },
+    {
+        "code": "KG",
+        "name": "Kilogram"
+    },
+    {
+        "code": "LTR",
+        "name": "Liter"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "code": "RACK-A01-01",
+        "count_rack": 10,
+        "location_id": 1
+    },
+    {
+        "code": "RACK-A01-02",
+        "count_rack": 10,
+        "location_id": 1
+    },
+    {
+        "code": "RACK-A02-01",
+        "count_rack": 15,
+        "location_id": 2
+    },
+    {
+        "code": "RACK-B01-01",
+        "count_rack": 20,
+        "location_id": 3
+    },
+    {
+        "code": "RACK-C01-01",
+        "count_rack": 10,
+        "location_id": 4
+    },
+    {
+        "code": "RACK-C02-01",
+        "count_rack": 10,
+        "location_id": 5
+    }
+]

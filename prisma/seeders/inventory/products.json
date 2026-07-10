@@ -1,0 +1,58 @@
+{
+    "products": [
+        {
+            "name": "Laptop Lenovo ThinkPad T480s",
+            "sku": "LEN-T480S",
+            "price": 8500000,
+            "stock": 10,
+            "category_id": 2,
+            "unit_id": 1,
+            "locations": [
+                {
+                    "code": "PL-001",
+                    "name": "Penyimpanan Laptop",
+                    "notes": "Rak elektronik utama",
+                    "warehouse_id": 1,
+                    "location_id": 1,
+                    "rack_id": 1
+                }
+            ]
+        },
+        {
+            "name": "Mouse Wireless Logitech",
+            "sku": "LOG-MOUSE-001",
+            "price": 250000,
+            "stock": 50,
+            "category_id": 3,
+            "unit_id": 1,
+            "locations": [
+                {
+                    "code": "PL-002",
+                    "name": "Penyimpanan Mouse",
+                    "notes": "Rak aksesoris",
+                    "warehouse_id": 1,
+                    "location_id": 2,
+                    "rack_id": 3
+                }
+            ]
+        },
+        {
+            "name": "Keyboard Mechanical",
+            "sku": "KEY-MECH-001",
+            "price": 750000,
+            "stock": 20,
+            "category_id": 3,
+            "unit_id": 1,
+            "locations": [
+                {
+                    "code": "PL-003",
+                    "name": "Penyimpanan Keyboard",
+                    "notes": "Rak aksesoris",
+                    "warehouse_id": 1,
+                    "location_id": 2,
+                    "rack_id": 3
+                }
+            ]
+        }
+    ]
+}

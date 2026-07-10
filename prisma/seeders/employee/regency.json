@@ -1,0 +1,17 @@
+[
+    {
+        "province_id": 1,
+        "code": "3372",
+        "name": "Kota Surakarta"
+    },
+    {
+        "province_id": 1,
+        "code": "3311",
+        "name": "Kabupaten Sukoharjo"
+    },
+    {
+        "province_id": 2,
+        "code": "3471",
+        "name": "Kota Yogyakarta"
+    }
+]

@@ -1,0 +1,124 @@
+{
+    "employees": [
+        {
+            "nip": "EMP001",
+            "name": "Budi Santoso",
+            "email": "budi@example.com",
+            "phone": "081234567890",
+
+            "photo_path": "/uploads/employees/budi.jpg",
+
+            "birth_place": "Surakarta",
+            "birth_date": "1990-05-10",
+
+            "marital_status": "married",
+            "children_count": 2,
+
+            "joined_at": "2020-01-15",
+
+            "position_id": 1,
+            "department_id": 1,
+            "district_id": 1,
+
+            "employment_type": "pkwtt",
+            "gender": "male",
+
+            "distance_km": 5.50,
+
+            "full_address": "Jl. Slamet Riyadi, Surakarta",
+
+            "status": "active",
+
+            "educations": [
+                {
+                    "education_level": "S1 Teknik Informatika",
+                    "school_name": "Universitas Sebelas Maret",
+                    "graduation_year": 2012,
+                    "sort_order": 1
+                },
+                {
+                    "education_level": "SMA",
+                    "school_name": "SMA Negeri 1 Surakarta",
+                    "graduation_year": 2008,
+                    "sort_order": 2
+                }
+            ]
+        },
+        {
+            "nip": "EMP002",
+            "name": "Andi Pratama",
+            "email": "andi@example.com",
+            "phone": "081298765432",
+
+            "photo_path": "/uploads/employees/andi.jpg",
+
+            "birth_place": "Yogyakarta",
+            "birth_date": "1995-08-20",
+
+            "marital_status": "single",
+            "children_count": 0,
+
+            "joined_at": "2023-06-01",
+
+            "position_id": 2,
+            "department_id": 1,
+            "district_id": 3,
+
+            "employment_type": "pkwt",
+            "gender": "male",
+
+            "distance_km": 12.75,
+
+            "full_address": "Jl. Malioboro, Yogyakarta",
+
+            "status": "active",
+
+            "educations": [
+                {
+                    "education_level": "D3 Teknik Komputer",
+                    "school_name": "Politeknik Negeri Semarang",
+                    "graduation_year": 2016,
+                    "sort_order": 1
+                }
+            ]
+        },
+        {
+            "nip": "EMP003",
+            "name": "Siti Rahma",
+            "email": "siti@example.com",
+            "phone": "081355566677",
+
+            "photo_path": null,
+
+            "birth_place": "Sukoharjo",
+            "birth_date": "2002-03-12",
+
+            "marital_status": "single",
+            "children_count": 0,
+
+            "joined_at": "2025-01-10",
+
+            "position_id": 4,
+            "department_id": 1,
+            "district_id": 2,
+
+            "employment_type": "magang",
+            "gender": "female",
+
+            "distance_km": 8.20,
+
+            "full_address": "Jl. Solo Baru, Sukoharjo",
+
+            "status": "active",
+
+            "educations": [
+                {
+                    "education_level": "S1 Sistem Informasi",
+                    "school_name": "Universitas Muhammadiyah Surakarta",
+                    "graduation_year": 2025,
+                    "sort_order": 1
+                }
+            ]
+        }
+    ]
+}

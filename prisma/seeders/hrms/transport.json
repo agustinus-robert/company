@@ -1,0 +1,78 @@
+{
+    "settings": [
+        {
+            "base_fare": 5000,
+            "effective_start": "2026-01-01",
+            "min_km": 0,
+            "max_km": 10,
+            "is_active": true,
+            "created_by": 1
+        },
+        {
+            "base_fare": 10000,
+            "effective_start": "2026-01-01",
+            "min_km": 10.01,
+            "max_km": 25,
+            "is_active": true,
+            "created_by": 1
+        },
+        {
+            "base_fare": 15000,
+            "effective_start": "2026-01-01",
+            "min_km": 25.01,
+            "max_km": 50,
+            "is_active": true,
+            "created_by": 1
+        }
+    ],
+
+    "periods": [
+        {
+            "period_year": 2026,
+            "period_month": 7,
+
+            "total_recipients": 2,
+            "total_amount": 500000,
+
+            "status": "calculated",
+
+            "calculated_by": 1,
+            "calculated_at": "2026-07-31 20:00:00",
+
+            "details": [
+                {
+                    "employee_id": 1,
+
+                    "base_fare": 15000,
+
+                    "original_km": 35.5,
+                    "rounded_km": 36,
+
+                    "attendance_days": 22,
+
+                    "nominal": 330000,
+
+                    "eligibility_status": "eligible",
+
+                    "calculation_note": "36 km x 15.000 x 22 hari"
+                },
+                {
+                    "employee_id": 2,
+
+                    "base_fare": 10000,
+
+                    "original_km": 18.2,
+                    "rounded_km": 18,
+
+                    "attendance_days": 17,
+
+                    "nominal": 170000,
+
+                    "eligibility_status": "eligible",
+
+                    "calculation_note": "18 km x 10.000 x 17 hari"
+                }
+            ]
+        }
+    ]
+}

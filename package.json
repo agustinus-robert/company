@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "imports": {
+    "#root/*": "./*"
+  },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "installer": "prisma migrate reset --force && prisma migrate dev && npx prisma generate && prisma db seed",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -14,11 +18,13 @@
     "schema": "prisma"
   },
   "dependencies": {
+    "@prisma/adapter-mariadb": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@tabler/core": "1.0.0-beta24",
     "@tabler/icons-vue": "^3.44.0",
     "apexcharts": "^3.54.0",
     "jquery": "^3.7.1",
+    "mariadb": "^3.5.3",
     "nuxt": "^4.0.0",
     "swiper": "^12.1.4",
     "vue": "latest",
@@ -27,6 +33,7 @@
     "vue3-apexcharts": "1.6.0"
   },
   "devDependencies": {
+    "@types/node": "^26.1.1",
     "prisma": "^7.8.0",
     "vite-plugin-commonjs": "^0.10.4"
   }

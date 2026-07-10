@@ -1,32 +1,3 @@
-model Attendance {
-    id Int @id @default(autoincrement())
-    employee_id Int
-    attendance_import_id Int?
-
-    attendance_date DateTime  @db.Date
-    checkin_at DateTime?
-    checkout_at DateTime?
-
-    checkin_location String?
-    checkout_location String?
-    attendance_type AttendanceType
-    duration_hours Decimal?  @db.Decimal(5,2)
-
-    status AttendanceStatus
-    verification_status VerificationStatus
-    verified_by_role String?
-    remarks String?
-
-    employee Employee  @relation(fields: [employee_id], references: [id])
-    attendance_import AttendanceImport? @relation(fields: [attendance_import_id], references: [id])
-
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-
-    @@unique([employee_id, attendance_date])
-    @@map("attendances")
-}
-
 model AttendanceImport {
     id Int @id @default(autoincrement())
     user_id Int
@@ -54,6 +25,35 @@ model AttendanceImport {
     updated_at DateTime @updatedAt
 
     @@map("attendance_imports")
+}
+
+model Attendance {
+    id Int @id @default(autoincrement())
+    employee_id Int
+    attendance_import_id Int?
+
+    attendance_date DateTime  @db.Date
+    checkin_at DateTime?
+    checkout_at DateTime?
+
+    checkin_location String?
+    checkout_location String?
+    attendance_type AttendanceType
+    duration_hours Decimal?  @db.Decimal(5,2)
+
+    status AttendanceStatus
+    verification_status VerificationStatus
+    verified_by_role String?
+    remarks String?
+
+    employee Employee  @relation(fields: [employee_id], references: [id])
+    attendance_import AttendanceImport? @relation(fields: [attendance_import_id], references: [id])
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    @@unique([employee_id, attendance_date])
+    @@map("attendances")
 }
 
 model AttendanceSummary {

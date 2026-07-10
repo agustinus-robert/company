@@ -1,0 +1,10 @@
+[
+    {
+        "code": "WH001",
+        "name": "Gudang Utama"
+    },
+    {
+        "code": "WH002",
+        "name": "Gudang Cabang"
+    }
+]

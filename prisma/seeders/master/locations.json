@@ -1,0 +1,27 @@
+[
+    {
+        "code": "LOC-A01",
+        "name": "Area A Rak 01",
+        "warehouse_id": 1
+    },
+    {
+        "code": "LOC-A02",
+        "name": "Area A Rak 02",
+        "warehouse_id": 1
+    },
+    {
+        "code": "LOC-B01",
+        "name": "Area B Rak 01",
+        "warehouse_id": 1
+    },
+    {
+        "code": "LOC-C01",
+        "name": "Area C Rak 01",
+        "warehouse_id": 2
+    },
+    {
+        "code": "LOC-C02",
+        "name": "Area C Rak 02",
+        "warehouse_id": 2
+    }
+]

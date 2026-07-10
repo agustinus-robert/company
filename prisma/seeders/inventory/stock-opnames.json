@@ -1,0 +1,28 @@
+{
+    "opnames": [
+        {
+            "date": "2026-07-10",
+            "title": "Stock Opname Juli 2026",
+            "warehouse_id": 1,
+            "qty": 80,
+            "checked_goods": 80,
+            "precentage": 100,
+            "note": "Pengecekan stok bulanan",
+            "fileName": "opname-juli.pdf",
+            "filePath": "/uploads/opname-juli.pdf",
+            "employee_id": 1,
+            "locations": [
+                {
+                    "product_id": 1,
+                    "qty": 10,
+                    "note": "Sesuai stok"
+                },
+                {
+                    "product_id": 2,
+                    "qty": 49,
+                    "note": "Ada selisih 1 barang"
+                }
+            ]
+        }
+    ]
+}

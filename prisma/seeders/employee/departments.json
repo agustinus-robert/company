@@ -1,0 +1,18 @@
+[
+    {
+        "code": "IT",
+        "name": "Information Technology"
+    },
+    {
+        "code": "HR",
+        "name": "Human Resource"
+    },
+    {
+        "code": "FIN",
+        "name": "Finance"
+    },
+    {
+        "code": "OPS",
+        "name": "Operational"
+    }
+]

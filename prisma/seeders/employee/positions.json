@@ -1,0 +1,22 @@
+[
+    {
+        "code": "MGR-IT",
+        "name": "IT Manager",
+        "position_type": "manager"
+    },
+    {
+        "code": "STF-IT",
+        "name": "IT Staff",
+        "position_type": "staf"
+    },
+    {
+        "code": "STF-HR",
+        "name": "HR Staff",
+        "position_type": "staf"
+    },
+    {
+        "code": "INT-IT",
+        "name": "IT Intern",
+        "position_type": "magang"
+    }
+]

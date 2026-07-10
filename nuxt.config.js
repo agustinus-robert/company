@@ -1,5 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import path from 'node:path'
 export default defineNuxtConfig({
+  alias: {
+    "@prisma": path.resolve("./prisma/generated/client"),
+  },
   future: {
     compatibilityVersion: 4,
   },
