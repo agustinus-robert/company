@@ -1,22 +1,181 @@
-[
-  {
-    "code": "SUPER_ADMIN",
-    "name": "Super Administrator",
-    "description": "Full access to all modules"
-  },
-  {
-    "code": "ADMIN",
-    "name": "Administrator",
-    "description": "Manage application data"
-  },
-  {
-    "code": "STAFF",
-    "name": "Staff",
-    "description": "Operational staff user"
-  },
-  {
-    "code": "VIEWER",
-    "name": "Viewer",
-    "description": "Read only access"
-  }
-]
+{
+  "modules": [
+    {
+      "code": "ROLE",
+      "name": "Kelola Role"
+    },
+    {
+      "code": "USER",
+      "name": "Kelola User"
+    },
+    {
+      "code": "PROFILE",
+      "name": "My Profile"
+    },
+    {
+      "code": "DASHBOARD",
+      "name": "Dashboard"
+    },
+    {
+      "code": "EMPLOYEE",
+      "name": "Data Pegawai"
+    },
+    {
+      "code": "ATTENDANCE",
+      "name": "Presensi"
+    },
+    {
+      "code": "TRANSPORT_ALLOWANCE",
+      "name": "Tunjangan Transport"
+    },
+    {
+      "code": "TRANSPORT_SETTING",
+      "name": "Setting Tunjangan Transport"
+    },
+    {
+      "code": "LOG",
+      "name": "Log"
+    }
+  ],
+
+  "roles": [
+    {
+      "code": "SUPER_ADMIN",
+      "name": "Superadmin",
+      "permissions": [
+        {
+          "module": "ROLE",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        },
+        {
+          "module": "USER",
+          "can_access": true,
+          "can_create": true,
+          "read_scope": "all",
+          "update_scope": "all",
+          "delete_scope": "own"
+        },
+        {
+          "module": "PROFILE",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "own",
+          "update_scope": "own",
+          "delete_scope": "no"
+        },
+        {
+          "module": "DASHBOARD",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        },
+        {
+          "module": "LOG",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        }
+      ]
+    },
+
+    {
+      "code": "MANAGER_HRD",
+      "name": "Manager HRD",
+      "permissions": [
+        {
+          "module": "PROFILE",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "own",
+          "update_scope": "own",
+          "delete_scope": "no"
+        },
+        {
+          "module": "DASHBOARD",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        },
+        {
+          "module": "EMPLOYEE",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        },
+        {
+          "module": "ATTENDANCE",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        },
+        {
+          "module": "TRANSPORT_ALLOWANCE",
+          "can_access": true,
+          "can_create": false,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        }
+      ]
+    },
+
+    {
+      "code": "ADMIN_HRD",
+      "name": "Admin HRD",
+      "permissions": [
+        {
+          "module": "PROFILE",
+          "can_access": true,
+          "read_scope": "own",
+          "update_scope": "own",
+          "delete_scope": "no"
+        },
+        {
+          "module": "DASHBOARD",
+          "can_access": true,
+          "read_scope": "all",
+          "update_scope": "no",
+          "delete_scope": "no"
+        },
+        {
+          "module": "EMPLOYEE",
+          "can_access": true,
+          "can_create": true,
+          "read_scope": "all",
+          "update_scope": "all",
+          "delete_scope": "no"
+        },
+        {
+          "module": "ATTENDANCE",
+          "can_access": true,
+          "can_create": true,
+          "read_scope": "all",
+          "update_scope": "all",
+          "delete_scope": "all"
+        },
+        {
+          "module": "TRANSPORT_SETTING",
+          "can_access": true,
+          "can_create": true,
+          "read_scope": "all",
+          "update_scope": "all",
+          "delete_scope": "all"
+        }
+      ]
+    }
+  ]
+}

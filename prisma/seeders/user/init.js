@@ -1,23 +1,79 @@
 import bcrypt from "bcrypt";
-import roles from "./roles.json" with { type: "json" };
+import roleData from "./roles.json" with { type: "json" };
 import users from "./users.json" with { type: "json" };
 import otps from "./otps.json" with { type: "json" };
+
+
+const modules = roleData.modules;
+const roles = roleData.roles;
+
+
+async function seedModules(prisma) {
+  console.log("Seeding modules...");
+
+  for (const module of modules) {
+    await prisma.module.create({
+      data: {
+        code: module.code,
+        name: module.name,
+        description: module.description,
+        sort_order: module.sort_order,
+      },
+    });
+  }
+
+  console.log("Modules seeded");
+}
+
 
 async function seedRoles(prisma) {
   console.log("Seeding roles...");
 
-  for (const role of roles) {
-    await prisma.role.create({
+  for (const roleData of roles) {
+    const { permissions = [], ...role } = roleData;
+
+    const createdRole = await prisma.role.create({
       data: {
         code: role.code,
         name: role.name,
         description: role.description,
       },
     });
+
+
+    for (const permission of permissions) {
+      const module = await prisma.module.findUnique({
+        where: {
+          code: permission.module,
+        },
+      });
+
+
+      if (!module) {
+        console.warn(
+          `Module ${permission.module} tidak ditemukan, skip permission`
+        );
+        continue;
+      }
+
+
+      await prisma.rolePermission.create({
+        data: {
+          role_id: createdRole.id,
+          module_id: module.id,
+          can_access: permission.can_access,
+          can_create: permission.can_create,
+          read_scope: permission.read_scope,
+          update_scope: permission.update_scope,
+          delete_scope: permission.delete_scope,
+        },
+      });
+    }
   }
 
-  console.log("Roles seeded");
+  console.log("Roles & permissions seeded");
 }
+
 
 async function seedUsers(prisma) {
   console.log("Seeding users...");
@@ -40,6 +96,7 @@ async function seedUsers(prisma) {
 
   console.log("Users seeded");
 }
+
 
 async function seedOtps(prisma) {
   console.log("Seeding OTP...");
@@ -67,7 +124,9 @@ async function seedOtps(prisma) {
   console.log("OTP seeded");
 }
 
+
 export default async function userInit(prisma) {
+  await seedModules(prisma);
   await seedRoles(prisma);
   await seedUsers(prisma);
   await seedOtps(prisma);
