@@ -1,0 +1,98 @@
+[
+  {
+    "user_id": 1,
+    "module_code": "AUTH",
+    "action": "login",
+    "description": "User berhasil login ke sistem",
+    "subject_type": "User",
+    "subject_id": 1,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 Chrome",
+    "old_values": null,
+    "new_values": null,
+    "url": "/login",
+    "method": "POST"
+  },
+  {
+    "user_id": 1,
+    "module_code": "USER",
+    "action": "create",
+    "description": "Menambahkan user baru",
+    "subject_type": "User",
+    "subject_id": 2,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 Chrome",
+    "old_values": null,
+    "new_values": {
+      "name": "Budi Santoso",
+      "username": "budi"
+    },
+    "url": "/user/manage",
+    "method": "POST"
+  },
+  {
+    "user_id": 1,
+    "module_code": "USER",
+    "action": "update",
+    "description": "Mengubah data user",
+    "subject_type": "User",
+    "subject_id": 2,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 Chrome",
+    "old_values": {
+      "status": "inactive"
+    },
+    "new_values": {
+      "status": "active"
+    },
+    "url": "/user/manage/2",
+    "method": "PUT"
+  },
+  {
+    "user_id": 1,
+    "module_code": "ROLE",
+    "action": "create",
+    "description": "Menambahkan role administrator",
+    "subject_type": "Role",
+    "subject_id": 3,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 Chrome",
+    "old_values": null,
+    "new_values": {
+      "name": "Administrator"
+    },
+    "url": "/role",
+    "method": "POST"
+  },
+  {
+    "user_id": 1,
+    "module_code": "USER",
+    "action": "delete",
+    "description": "Menghapus user",
+    "subject_type": "User",
+    "subject_id": 5,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 Chrome",
+    "old_values": {
+      "name": "Ahmad",
+      "username": "ahmad"
+    },
+    "new_values": null,
+    "url": "/user/manage/5",
+    "method": "DELETE"
+  },
+  {
+    "user_id": 1,
+    "module_code": "AUTH",
+    "action": "logout",
+    "description": "User keluar dari sistem",
+    "subject_type": "User",
+    "subject_id": 1,
+    "ip_address": "127.0.0.1",
+    "user_agent": "Mozilla/5.0 Chrome",
+    "old_values": null,
+    "new_values": null,
+    "url": "/logout",
+    "method": "POST"
+  }
+]
