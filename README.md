@@ -1,95 +1,150 @@
-# Nuxt 4 + Tabler Admin Dashboard Boilerplate
+# JMC Testing
 
-Boilerplate admin dashboard menggunakan **Nuxt 4** dengan **Tabler UI v1.0.0-beta24**.
+Aplikasi **JMC Testing** dibangun menggunakan **Nuxt** dan **Prisma ORM**.
 
-## Memulai
+## Catatan
 
-### 1. Install dependencies
+- Pastikan service MySQL sedang berjalan.
+- Database `jmc` harus dibuat terlebih dahulu sebelum menjalankan `npm run installer`.
+- Installer akan melakukan generate Prisma Client, migrasi database, dan seeding data secara otomatis.
+- Jika mengubah Prisma Schema, jalankan kembali migrasi sesuai kebutuhan.
+- Secara default aplikasi menggunakan `DEMO_MODE=true` sehingga token JWT memiliki masa berlaku yang panjang untuk kebutuhan demo.
+- Jika ingin menguji masa berlaku (expired) token JWT, ubah konfigurasi berikut pada file `.env`:
+
+## Persyaratan
+
+Pastikan telah terpasang:
+
+- Node.js 20 atau lebih baru
+- npm
+- MySQL 8.x
+
+---
+
+# Instalasi
+
+## 1. Clone Repository
+
+```bash
+git clone <repository-url>
+cd <nama-folder-project>
+```
+
+## 2. Install Dependency
 
 ```bash
 npm install
 ```
 
-### 2. Konfigurasi `.env`
+## 3. Buat Database
 
-Edit `.env` untuk mengatur nama aplikasi dan nama client:
+Sebelum menjalankan installer, buat database terlebih dahulu di MySQL.
 
-```bash
-APP_NAME=NAME_APP_HERE
-APP_CLIENT=NAME_CLIENT_HERE
+Contoh:
+
+```sql
+CREATE DATABASE jmc;
 ```
 
-### 3. Jalankan development server
+> Nama database harus sama dengan nilai `DB_NAME` pada file `.env`.
+
+---
+
+## 4. Konfigurasi Environment
+
+Salin file `.env.example` menjadi `.env`.
+
+Linux / macOS:
+
+```bash
+cp .env.example .env
+```
+
+Windows:
+
+```cmd
+copy .env.example .env
+```
+
+Kemudian isi `.env` dengan konfigurasi berikut:
+
+```env
+APP_NAME="Isian APP"
+APP_CLIENT="Isian client"
+
+JWT_SECRET="Generate dari https://www.jwt.io/"
+NUXT_PUBLIC_RECAPTCHA_SITE_KEY="Isian recaptha"
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=
+DB_CONNECTION_LIMIT=5
+
+DEMO_MODE=true
+
+JWT_EXPIRES_IN=3650d
+SESSION_EXPIRES_MINUTES=3
+
+DATABASE_URL="mysql://root:root@localhost:3306/jmc"
+```
+
+Sesuaikan nilai `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, dan `DATABASE_URL` dengan konfigurasi MySQL pada komputer Anda.
+
+---
+
+## 5. Jalankan Installer
+
+Setelah file `.env` selesai dikonfigurasi, jalankan:
+
+```bash
+npm run installer
+```
+
+Perintah tersebut akan secara otomatis:
+
+- Generate Prisma Client
+- Menjalankan migrasi database
+- Menjalankan proses seeding data awal
+
+---
+
+## 6. Jalankan Aplikasi
+
+Mode development:
 
 ```bash
 npm run dev
 ```
 
-Buka [http://localhost:3000](http://localhost:3000)
+Aplikasi dapat diakses melalui:
 
-### 4. Build untuk production
-
-```bash
-npm run build
+```
+http://localhost:3000
 ```
 
 ---
 
-## Konfigurasi Menu Sidebar
+# Alur Instalasi
 
-Edit `app/data/menu.js` untuk menambah/mengubah/menghapus menu:
-
-```js
-export const menuItems = [
-  {
-    title: "Dashboard",
-    icon: IconLayoutDashboardFilled, // Tabler Icons
-    to: "/",
-  },
-  {
-    title: "Menu dengan Submenu",
-    icon: IconUserFilled,
-    children: [
-      // Array children = dropdown menu
-      { title: "Submenu 1", to: "/menu/sub1" },
-      { title: "Submenu 2", to: "/menu/sub2" },
-    ],
-  },
-];
-```
-
-Tabler Icons bisa dilihat di: https://tabler.io/icons
-
----
-
-## Dark Mode
-
-Dark mode otomatis tersimpan di `localStorage`. Toggle tersedia di navbar kanan atas.
-
-Implementasi via composable `useTheme()`:
-
-```js
-const { isDark, toggleTheme, initTheme } = useTheme();
+```text
+Clone Repository
+        │
+        ▼
+npm install
+        │
+        ▼
+Buat Database "jmc"
+        │
+        ▼
+Konfigurasi .env
+        │
+        ▼
+npm run installer
+        │
+        ▼
+npm run dev
 ```
 
 ---
-
-## Menambah Halaman Baru
-
-1. Buat file di `app/pages/nama-halaman/index.vue`
-2. Tambahkan `definePageMeta({ title: 'Judul Halaman' })`
-3. Tambahkan menu di `app/data/menu.js`
-
-```vue
-<template>
-  <div>
-    <!-- konten halaman -->
-  </div>
-</template>
-
-<script setup>
-definePageMeta({
-  title: "Halaman Baru",
-});
-</script>
-```
