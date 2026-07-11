@@ -12,7 +12,7 @@
               <div class="row align-items-center">
                 <div class="col-auto">
                   <img
-                    src="/images/pegawai/ahmad.jpg"
+                    :src="`/uploads/employee/${employee.photo_path ?? 'default.png'}`"
                     alt=""
                     class="foto-ptofil"
                   />
@@ -245,7 +245,7 @@ useSeoMeta({
 const employee = ref(null);
 
 const loadEmployee = async () => {
-  const response = await $fetch(`/api/employees/${route.params.nipp}`);
+  const response = await $fetch(`/api/employees/nipp/${route.params.nipp}`);
 
   if (response.success) {
     employee.value = response.data;

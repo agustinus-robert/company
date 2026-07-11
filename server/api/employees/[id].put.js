@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
 
           email: body.email,
           phone: body.phone,
+          photo_path: body.photo_path ?? "default.png",
 
           birth_place: body.birth_place,
 
@@ -29,13 +30,12 @@ export default defineEventHandler(async (event) => {
           position_id: Number(body.position_id),
           department_id: Number(body.department_id),
           district_id: Number(body.district_id),
-
           employment_type: body.employment_type,
 
           gender: body.gender,
 
           marital_status: body.marital_status,
-
+          status: body.status,
           children_count: Number(body.children_count ?? 0),
 
           distance_km: body.distance_km ? Number(body.distance_km) : null,
@@ -46,7 +46,6 @@ export default defineEventHandler(async (event) => {
         },
       });
 
-      // update pendidikan
       if (body.educations) {
         await tx.employeeEducation.deleteMany({
           where: {

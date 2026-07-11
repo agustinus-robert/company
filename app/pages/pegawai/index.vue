@@ -102,7 +102,7 @@
 
                   <!-- Detail -->
 
-                  <NuxtLink :to="`/pegawai/${item.id}`" class="text-dark">
+                  <NuxtLink :to="`/pegawai/${item.nip}`" class="text-dark">
                     <span data-bs-toggle="tooltip" title="Detail">
                       <IconFileDescription stroke="{1}" size="20" />
                     </span>

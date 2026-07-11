@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
 
           email: body.email,
           phone: body.phone,
-
+          photo_path: body.photo_path ?? "default.png",
           birth_place: body.birth_place,
 
           birth_date: body.birth_date ? new Date(body.birth_date) : null,
@@ -52,6 +52,7 @@ export default defineEventHandler(async (event) => {
           full_address: body.full_address,
 
           created_by: body.created_by,
+          status: body.status,
 
           educations: {
             create:

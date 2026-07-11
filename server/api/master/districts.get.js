@@ -11,6 +11,13 @@ export default defineEventHandler(async () => {
           id: true,
           code: true,
           name: true,
+          province: {
+            select: {
+              id: true,
+              code: true,
+              name: true,
+            },
+          },
         },
       },
     },

@@ -26,7 +26,11 @@
 
     <div class="mb-2">
       <label class="form-check">
-        <input type="checkbox" v-model="form.remember" class="form-check-input" />
+        <input
+          type="checkbox"
+          v-model="form.remember"
+          class="form-check-input"
+        />
         <span class="form-check-label">Remember Me</span>
       </label>
     </div>
@@ -34,16 +38,18 @@
     <div class="mb-2">
       <div
         class="g-recaptcha"
-        data-sitekey="6LeNRUwtAAAAAJ-_IichrjKO9h3GN0kUd1gjCQ2z"
+        :data-sitekey="config.public.recaptchaSiteKey"
       ></div>
     </div>
 
     <!-- Submit -->
     <div class="d-grid mt-4">
-      <button class="btn btn-primary text-uppercase shadow py-3" 
-      :disabled="loading"
-      type="submit">
-        {{ loading ? 'Loading...' : 'Log In' }}
+      <button
+        class="btn btn-primary text-uppercase shadow py-3"
+        :disabled="loading"
+        type="submit"
+      >
+        {{ loading ? "Loading..." : "Log In" }}
       </button>
     </div>
   </form>
@@ -64,6 +70,32 @@ const form = reactive({
 });
 
 const login = async () => {
+  const captchaToken = window.grecaptcha?.getResponse();
+
+  if (!form.username.trim()) {
+    toast.error("Username atau email wajib diisi.");
+    return;
+  }
+
+  if (form.username.includes("@")) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(form.username)) {
+      toast.error("Format email tidak valid.");
+      return;
+    }
+  }
+
+  if (!form.password.trim()) {
+    toast.error("Password wajib diisi.");
+    return;
+  }
+
+  if (!captchaToken) {
+    toast.error("Silakan centang reCAPTCHA terlebih dahulu.");
+    return;
+  }
+
   try {
     loading.value = true;
 
@@ -72,7 +104,7 @@ const login = async () => {
       body: form,
     });
 
-    if(loginResponse.success == true){
+    if (loginResponse.success == true) {
       const token = useCookie("token", {
         maxAge: 60 * 60 * 24 * 30,
         httpOnly: false,
@@ -83,9 +115,7 @@ const login = async () => {
       await router.push("/");
     }
   } catch (error) {
-    toast.error(
-      error?.data?.message || "Username atau password salah"
-    );
+    toast.error(error?.data?.message || "Username atau password salah");
   } finally {
     loading.value = false;
   }

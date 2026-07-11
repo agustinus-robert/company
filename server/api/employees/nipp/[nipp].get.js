@@ -1,10 +1,9 @@
 import { prisma } from "#root/server/db/prisma.js";
 
 export default defineEventHandler(async (event) => {
-  console.log("MASUK PDF ID ROUTE nipp");
-
+  console.log("QUERY EMPLOYEE INCLUDE DISTRICT");
   try {
-    const nipp = Number(event.context.params.nipp);
+    const nipp = event.context.params.nipp;
 
     const employee = await prisma.employee.findFirst({
       where: {

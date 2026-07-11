@@ -5,7 +5,7 @@
 <script setup>
 definePageMeta({
   title: "Tambah Pegawai",
-  middleware: "auth"
+  middleware: "auth",
 });
 
 useSeoMeta({
