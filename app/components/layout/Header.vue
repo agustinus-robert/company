@@ -278,7 +278,7 @@
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="#" class="dropdown-item"
+            <a href="/user/me" class="dropdown-item"
               ><i class="bi bi-person me-2"></i> My Profile</a
             >
             <a href="#" class="dropdown-item"
