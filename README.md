@@ -5,7 +5,7 @@ Aplikasi **JMC Testing** dibangun menggunakan **Nuxt** dan **Prisma ORM**.
 ## Catatan
 
 - Pastikan service MySQL sedang berjalan.
-- Database `jmc` harus dibuat terlebih dahulu sebelum menjalankan `npm run installer`.
+- Database `NAMA_DB_ANDA` harus dibuat terlebih dahulu sebelum menjalankan `npm run installer`.
 - Installer akan melakukan generate Prisma Client, migrasi database, dan seeding data secara otomatis.
 - Jika mengubah Prisma Schema, jalankan kembali migrasi sesuai kebutuhan.
 - Secara default aplikasi menggunakan `DEMO_MODE=true` sehingga token JWT memiliki masa berlaku yang panjang untuk kebutuhan demo.
