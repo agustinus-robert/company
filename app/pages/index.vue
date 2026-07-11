@@ -1,190 +1,260 @@
 <script setup>
 definePageMeta({
   title: "Dashboard",
-  middleware: "auth"
+  middleware: "auth",
 });
 
 useSeoMeta({
   title: "Dashboard",
 });
 
-import { totalStatistik, dataPegawaiTerbaru } from "@/data/dashboard.js";
+const { user } = useAuth();
 
-const statusPegawaiSeries = [75, 30, 19];
-const genderPegawaiSeries = [100, 24];
+const dashboard = ref(null);
+
+const isSuperAdmin = computed(() => {
+  return user.value?.role?.code === "SUPER_ADMIN";
+});
+
+const isManagerHRD = computed(() => {
+  return user.value?.role?.code === "MANAGER_HRD";
+});
+
+const isAdminHRD = computed(() => {
+  return user.value?.role?.code === "ADMIN_HRD";
+});
+
+const loadDashboard = async () => {
+  try {
+    const response = await $fetch("/api/dashboard");
+
+    if (response.success) {
+      dashboard.value = response.data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const statusPegawaiSeries = computed(() => {
+  return dashboard.value?.chartStatus ?? [];
+});
+
+const genderPegawaiSeries = computed(() => {
+  return dashboard.value?.chartGender ?? [];
+});
 
 const statusPegawaiOptions = {
-  chart: { type: "donut", height: 200 },
+  chart: {
+    type: "donut",
+    height: 200,
+  },
+
   labels: ["PKWT", "PKWTT", "Magang"],
-  colors: [
-    "rgba(84, 128, 199, 1)",
-    "rgba(43, 80, 142, 1)",
-    "rgba(254, 126, 0, 1)",
-  ],
-  legend: { position: "bottom" },
-  dataLabels: { enabled: true },
+
+  legend: {
+    position: "bottom",
+  },
+
+  dataLabels: {
+    enabled: true,
+  },
 };
 
 const genderPegawaiOptions = {
-  chart: { type: "donut", height: 200 },
+  chart: {
+    type: "donut",
+    height: 200,
+  },
+
   labels: ["Laki-laki", "Perempuan"],
-  colors: ["rgba(43, 80, 142, 1)", "rgba(254, 126, 0, 1)"],
-  legend: { position: "bottom" },
-  dataLabels: { enabled: true },
+
+  legend: {
+    position: "bottom",
+  },
+
+  dataLabels: {
+    enabled: true,
+  },
 };
+
+onMounted(() => {
+  loadDashboard();
+});
 </script>
 
 <template>
-  <div class="row g-3">
-    <!-- Card Greeting -->
-    <div class="col-md-3">
-      <div class="card bg-dark h-100 position-relative">
-        <div class="card-body">
-          <div class="text-center">
-            <img
-              src="@/assets/images/greeting-img.svg"
-              alt=""
-              class="img-fluid mb-4"
-            />
+  <div v-if="isSuperAdmin || isAdminHRD" class="card">
+    <div class="card-body text-center py-5">
+      <h2>
+        Selamat Datang
+        {{ user?.name }}
+        -
+        {{ user?.role?.name }}
+      </h2>
+    </div>
+  </div>
+
+  <div v-if="isManagerHRD">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <div class="card bg-dark h-100">
+          <div class="card-body">
+            <div class="text-center">
+              <img
+                src="@/assets/images/greeting-img.svg"
+                class="img-fluid mb-4"
+              />
+            </div>
+
+            <h3 class="card-title text-white">
+              Halo,
+              {{ user?.name }}
+            </h3>
+
+            <p class="text-white fw-lighter fst-italic">
+              "Fokuskan tujuan yang ingin didapat, jangan biarkan faktor lain
+              menghalangi tujuan Anda"
+            </p>
           </div>
-          <h3 class="card-title text-white">
-            Halo, selamat datang Budi Purwanto di Aplikasi Kepegawaian
-          </h3>
-          <p class="text-white fw-lighter fst-italic">
-            "Fokuskan tujuan yang ingin didapat, jangan biarkan faktor lain
-            menghalangi tujuan Anda"
-          </p>
         </div>
       </div>
-    </div>
-    <div class="col-md-9">
-      <div class="row g-3">
-        <!-- Card Total -->
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body">
-              <div class="row g-3">
-                <div
-                  class="col-md-6 col-lg-3"
-                  v-for="(item, index) in totalStatistik"
-                  :key="index"
-                >
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <div
-                        class="d-flex rounded-circle"
-                        :style="{
-                          width: '56px',
-                          height: '56px',
-                          background: item.backgroundColor,
-                        }"
-                      >
-                        <component
-                          :is="item.icon"
-                          :stroke="2"
-                          class="m-auto text-white"
-                        />
-                      </div>
-                    </div>
 
-                    <div class="col">
-                      <h3 class="fs-2 mb-1">{{ item.value }}</h3>
-                      <p class="text-secondary fw-light mb-0">
-                        {{ item.title }}
-                      </p>
-                    </div>
-                  </div>
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-body">
+            <div class="row g-3">
+              <div
+                v-for="(item, index) in dashboard?.statistik ?? []"
+                :key="index"
+                class="col-md-6 col-lg-3"
+              >
+                <div class="text-center">
+                  <h3 class="fs-2 mb-1">
+                    {{ item.value }}
+                  </h3>
+
+                  <p class="text-secondary mb-0">
+                    {{ item.title }}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- Chart Total Pegawai Berdasarkan Status Kontrak -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">
-                Total Pegawai Berdasarkan Status Kontrak
-              </h3>
-              <ClientOnly>
-                <apexchart
-                  type="donut"
-                  height="200"
-                  :options="statusPegawaiOptions"
-                  :series="statusPegawaiSeries"
-                />
-              </ClientOnly>
+
+        <div class="row g-3 mt-1">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">
+                  Total Pegawai Berdasarkan Status Kontrak
+                </h3>
+
+                <ClientOnly>
+                  <apexchart
+                    type="donut"
+                    height="250"
+                    :options="statusPegawaiOptions"
+                    :series="statusPegawaiSeries"
+                  />
+                </ClientOnly>
+              </div>
             </div>
           </div>
-        </div>
-        <!-- Chart Total Pegawai Berdasarkan Gender -->
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Total Pegawai Berdasarkan Gender</h3>
-              <ClientOnly>
-                <apexchart
-                  type="donut"
-                  height="200"
-                  :options="genderPegawaiOptions"
-                  :series="genderPegawaiSeries"
-                />
-              </ClientOnly>
+
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">Total Pegawai Berdasarkan Gender</h3>
+
+                <ClientOnly>
+                  <apexchart
+                    type="donut"
+                    height="250"
+                    :options="genderPegawaiOptions"
+                    :series="genderPegawaiSeries"
+                  />
+                </ClientOnly>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Pegawai Terbaru -->
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Data Pegawai Terbaru</h3>
-        </div>
-        <div class="table-responsive card-body p-0">
-          <table class="table table-vcenter table-striped card-table">
-            <thead>
-              <tr>
-                <th class="w-1">No</th>
-                <th>NIPP</th>
-                <th>Nama Lengkap</th>
-                <th>Tanggal Masuk</th>
-                <th>Status Kepegawaian</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item, index) in dataPegawaiTerbaru" :key="item.nipp">
-                <td class="text-center">{{ index + 1 }}</td>
-                <td>{{ item.nipp }}</td>
-                <td>
-                  <div class="d-flex align-items-center gap-1">
-                    <img
-                      :src="`/images/pegawai/${item.photo}`"
-                      alt=""
-                      style="width: 32px; height: 32px"
-                      class="rounded-pill"
-                    />
-                    <p class="mb-0">
-                      {{ item.nama }}
-                    </p>
-                  </div>
-                </td>
-                <td>{{ item.tanggalMasuk }}</td>
-                <td>{{ item.status }}</td>
-                <td>
-                  <NuxtLink
-                    :to="`/pegawai/${item.nipp}`"
-                    class="btn btn-primary btn-sm"
-                  >
-                    Detail Pegawai
-                  </NuxtLink>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+    <div class="card mt-3">
+      <div class="card-header">
+        <h3 class="card-title">Data Pegawai Terbaru</h3>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-vcenter table-striped">
+          <thead>
+            <tr>
+              <th>No</th>
+
+              <th>NIP</th>
+
+              <th>Nama Lengkap</th>
+
+              <th>Tanggal Masuk</th>
+
+              <th>Status</th>
+
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr
+              v-for="(item, index) in dashboard?.pegawaiTerbaru ?? []"
+              :key="item.nip"
+            >
+              <td>
+                {{ index + 1 }}
+              </td>
+
+              <td>
+                {{ item.nip }}
+              </td>
+
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <img
+                    :src="`/uploads/employee/${item.photo_path ?? 'default.png'}`"
+                    width="32"
+                    height="32"
+                    class="rounded-circle"
+                  />
+
+                  {{ item.name }}
+                </div>
+              </td>
+
+              <td>
+                {{
+                  item.joined_at
+                    ? new Date(item.joined_at).toLocaleDateString("id-ID")
+                    : "-"
+                }}
+              </td>
+
+              <td>
+                {{ item.employment_type.toUpperCase() }}
+              </td>
+
+              <td>
+                <NuxtLink
+                  :to="`/pegawai/${item.nip}`"
+                  class="btn btn-primary btn-sm"
+                >
+                  Detail Pegawai
+                </NuxtLink>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
