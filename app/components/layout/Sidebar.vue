@@ -53,7 +53,7 @@
           class="offcanvas-body p-3 p-lg-0 flex-column flex-grow-1 overflow-auto"
         >
           <ul class="navbar-nav align-items-start pt-lg-3">
-            <template v-for="item in menuItems">
+            <template v-for="item in filteredMenu">
               <!-- Menu dengan children (dropdown) -->
               <li
                 :key="item.title"
@@ -124,28 +124,68 @@
 <script setup>
 import { menuItems } from "~/data/menu.js";
 
-const appName = "Admin";
 const route = useRoute();
 const config = useRuntimeConfig();
 
-// Dropdown yang sedang terbuka
+const { user } = useAuth();
+
 const openDropdowns = ref([]);
 
-// Cek apakah route aktif (exact match untuk '/', startsWith untuk lainnya)
+const filteredMenu = computed(() => {
+  if (!user.value) {
+    return [];
+  }
+
+  const role = user.value.role?.code;
+
+  if (!role) {
+    return [];
+  }
+
+  return menuItems
+    .filter((item) => {
+      return item.roles?.includes(role);
+    })
+    .map((item) => {
+      if (item.children) {
+        return {
+          ...item,
+          children: item.children.filter((child) =>
+            child.roles?.includes(role),
+          ),
+        };
+      }
+
+      return item;
+    })
+    .filter((item) => {
+      if (item.children) {
+        return item.children.length > 0;
+      }
+
+      return true;
+    });
+});
+
 const isActive = (path) => {
-  if (path === "/") return route.path === "/";
+  if (path === "/") {
+    return route.path === "/";
+  }
+
   return route.path === path || route.path.startsWith(path + "/");
 };
 
-// Cek apakah salah satu child aktif
 const isParentActive = (item) => {
-  if (!item.children) return false;
+  if (!item.children) {
+    return false;
+  }
+
   return item.children.some((child) => isActive(child.to));
 };
 
-// Toggle dropdown manual
 const toggleDropdown = (title) => {
   const idx = openDropdowns.value.indexOf(title);
+
   if (idx === -1) {
     openDropdowns.value.push(title);
   } else {
@@ -153,11 +193,10 @@ const toggleDropdown = (title) => {
   }
 };
 
-// Otomatis buka dropdown jika ada child yang aktif
 watch(
   () => route.path,
   () => {
-    menuItems.forEach((item) => {
+    filteredMenu.value.forEach((item) => {
       if (item.children && isParentActive(item)) {
         if (!openDropdowns.value.includes(item.title)) {
           openDropdowns.value.push(item.title);
@@ -165,6 +204,8 @@ watch(
       }
     });
   },
-  { immediate: true },
+  {
+    immediate: true,
+  },
 );
 </script>
