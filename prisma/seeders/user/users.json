@@ -18,6 +18,15 @@
     "status": "active"
   },
   {
+    "role_id": 3,
+    "name": "Dina Marina",
+    "username": "dinamari",
+    "email": "dinamar@example.com",
+    "cellphone": "081234567892",
+    "password": "password",
+    "status": "active"
+  },
+  {
     "role_id": 2,
     "name": "Guest User",
     "username": "guest",
