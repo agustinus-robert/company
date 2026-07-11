@@ -264,24 +264,35 @@
             data-bs-toggle="dropdown"
           >
             <span class="bg-primary text-white avatar rounded-circle">
-              {{ getInitials("User Name") }}
+              {{ getInitials(user?.name ?? "User") }}
             </span>
+
             <div class="d-none d-xl-block ps-2">
-              <div class="fw-bold">USER NAME</div>
-              <div class="mt-1 small text-primary">USER ROLE</div>
+              <div class="fw-bold">
+                {{ user?.name ?? "-" }}
+              </div>
+
+              <div class="mt-1 small text-primary">
+                {{ user?.role?.name ?? "-" }}
+              </div>
             </div>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-            <a href="?page=profile" class="dropdown-item"
+            <a href="#" class="dropdown-item"
               ><i class="bi bi-person me-2"></i> My Profile</a
             >
-            <a href="?page=change-password" class="dropdown-item"
+            <a href="#" class="dropdown-item"
               ><i class="bi bi-key me-2"></i> Change Password</a
             >
             <div class="dropdown-divider"></div>
-            <a href="logout.php" class="dropdown-item text-danger"
-              ><i class="bi bi-box-arrow-right me-2"></i> Logout</a
+            <a
+              href="#"
+              class="dropdown-item text-danger"
+              @click.prevent="logout"
             >
+              <i class="bi bi-box-arrow-right me-2"></i>
+              Logout
+            </a>
           </div>
         </div>
       </div>
@@ -292,4 +303,8 @@
 <script setup>
 const { toggleTheme } = useTheme();
 const { toggleSidebar } = useSidebar();
+
+const { user, logout } = useAuth();
+
+console.log(user);
 </script>

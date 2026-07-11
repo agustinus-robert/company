@@ -53,7 +53,6 @@ export default defineEventHandler(async (event) => {
 
   let sessionToken = null;
 
-  // hanya buat session kalau bukan demo mode
   if (!config.demoMode) {
     sessionToken = crypto.randomUUID();
 

@@ -39,12 +39,14 @@ import Sidebar from "@/components/layout/Sidebar.vue";
 import Header from "@/components/layout/Header.vue";
 import AppBreadcrumb from "@/components/layout/AppBreadcrumb.vue";
 
+const { fetchUser } = useAuth();
 const { initTheme } = useTheme();
 const route = useRoute();
 
 const pageTitle = computed(() => route.meta?.title || "");
 
-onMounted(() => {
+onMounted(async () => {
   initTheme();
+  await fetchUser();
 });
 </script>
